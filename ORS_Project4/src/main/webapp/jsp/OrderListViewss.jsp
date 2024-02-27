@@ -84,7 +84,7 @@
 					<td><%=bean.getC_Name()%></td>
 					<td><%=bean.getAccount()%></td>
 					<td><%=bean.getPrice() %>
-					<td> <a href="BankCtl?cid=<%=bean.getId()%>" >edit</td>
+					<td> <a href="OrderCtl?cid=<%=bean.getId()%>" >edit</td>
 					
 						
 				</tr>
