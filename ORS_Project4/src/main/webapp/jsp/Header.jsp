@@ -66,11 +66,11 @@
          <a href="<%=ORSView.CHANGE_PASSWORD_CTL%>">Change Password</b></a> |
        	 <a href="<%=ORSView.GET_MARKSHEET_CTL%>">Get Marksheet</b></a> |              
        	 <a href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>">Marksheet MeritList</b></a> |
-         <a href="<%=ORSView.BANK_CTL%>">OrderAdd</b></a> | 
-        <a href="<%=ORSView.BANK_LIST_CTL%>">Order_LIST</a>  | 
+       <%--   <a href="<%=ORSView.BANK_CTL%>">OrderAdd</b></a> | 
+        <a href="<%=ORSView.BANK_LIST_CTL%>">Order_LIST</a>  | --%> 
         
-        <%--   <a href="<%=ORSView.Order_CTL%>">OrderAdd</b></a> | 
-        <a href="<%=ORSView.BANK_LIST_CTL%>">Order_LIST</a>  | --%>
+          <a href="<%=ORSView.ORDER_CTL%>">OrderAdd</b></a> | 
+        <a href="<%=ORSView.ORDER_LIST_CTL%>">Order_LIST</a>  | 
          
         <%
             if (userBean.getRoleId() == RoleBean.ADMIN) {
