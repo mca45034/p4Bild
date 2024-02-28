@@ -76,8 +76,8 @@ _<%@page import="java.util.HashMap"%>
 					</label> <%=HTMLUtility.getList("roleid", String.valueOf(bean.getRoleId()), rlist) %>
 					
 				
-				 &emsp; <label>Last Name</font> :
-					</label> <%=HTMLUtility.getList("lastName", String.valueOf(bean.getLastName()), ulist) %>
+				<%--  &emsp; <label>Last Name</font> :
+					</label> <%=HTMLUtility.getList("lastName", String.valueOf(bean.getLastName()), ulist) %> --%>
 				
 				 
 				

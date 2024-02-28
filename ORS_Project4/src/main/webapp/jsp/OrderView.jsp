@@ -13,7 +13,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <jsp:useBean id="bean" class="com.rays.pro4.Bean.BankBean" scope="request"></jsp:useBean>
+ <jsp:useBean id="bean" class="com.rays.pro4.Bean.OrderBean" scope="request"></jsp:useBean>
    <%@ include file="Header.jsp"%>
    
    <center>

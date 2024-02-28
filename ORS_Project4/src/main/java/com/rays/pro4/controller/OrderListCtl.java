@@ -8,47 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
-import com.rays.pro4.Bean.BankBean;
 import com.rays.pro4.Bean.BaseBean;
+import com.rays.pro4.Bean.OrderBean;
 import com.rays.pro4.Exception.ApplicationException;
-import com.rays.pro4.Model.BankModel;
+import com.rays.pro4.Model.OrderModel;
 import com.rays.pro4.Util.DataUtility;
-import com.rays.pro4.Util.PropertyReader;
 import com.rays.pro4.Util.ServletUtility;
-/**
- * The Class BankCtl.
- * 
- * @author Rahul Kirar
- * 
- */
+
 @WebServlet(name = "OrderListCtl", urlPatterns = { "/ctl/OrderListCtl" })
 public class OrderListCtl extends BaseCtl{
 	
-
-	@Override
-	protected void preload(HttpServletRequest request) {
-
-		
-		BankModel umodel = new BankModel();
-
-		try {
-			
-		List ulist = umodel.list(0,0);
-
-		
-		request.setAttribute("accu", ulist);
-
-		} catch (ApplicationException e) {
-			e.printStackTrace();
-		}
-	}
-
-	
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
-		BankBean bean = new BankBean();
+		OrderBean bean = new OrderBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("cid")));
 		bean.setC_Name(DataUtility.getString(request.getParameter("cName")));
@@ -68,11 +40,11 @@ public class OrderListCtl extends BaseCtl{
 
 		int pageSize =10 ;
 
-		BankBean bean = (BankBean) populateBean(request);
+		OrderBean bean = (OrderBean) populateBean(request);
 		String op = DataUtility.getString(request.getParameter("operation"));
 
 
-		BankModel model = new BankModel();
+		OrderModel model = new OrderModel();
 
 		try {
 			list = model.search(bean, pageNo, pageSize);
@@ -82,14 +54,10 @@ public class OrderListCtl extends BaseCtl{
 
 			request.setAttribute("nextlist", nextList.size());
 
-			ServletUtility.setList(list, request);
-			if (list == null || list.size() == 0) {
-				ServletUtility.setErrorMessage("No record found ", request);
-			}
+
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);
-			//ServletUtility.setBean(bean, request);
 			
 		} catch (ApplicationException e) {
 			ServletUtility.handleException(e, request, response);
@@ -103,7 +71,6 @@ public class OrderListCtl extends BaseCtl{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("OrderListCtl doPost Start");
 
 		List list;
 		List nextList = null;
@@ -114,34 +81,16 @@ public class OrderListCtl extends BaseCtl{
 
 		pageSize = (pageSize == 0) ? 10 : pageSize;
 		String op = DataUtility.getString(request.getParameter("operation"));
-		BankBean bean = (BankBean) populateBean(request);
+		OrderBean bean = (OrderBean) populateBean(request);
 		
 		String[] ids = request.getParameterValues("ids");
-		BankModel model = new BankModel();
+		OrderModel model = new OrderModel();
 		
-		
-		if (OP_NEW.equalsIgnoreCase(op)) {
-			ServletUtility.redirect(ORSView.ORDER_CTL, request, response);
-			return;
-		} else if (OP_SEARCH.equalsIgnoreCase(op)) {
-			System.out.println("search chali");
-			pageNo = 1;
-		}
-		 
-		else if (OP_NEXT.equalsIgnoreCase(op)) {
-			pageNo++;
-			
-		} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
-			pageNo--;
-		} 
-		
-		else if (OP_RESET.equalsIgnoreCase(op)) {
-			ServletUtility.redirect(ORSView.ORDER_LIST_CTL, request, response);
-			return;
-		} else if (OP_DELETE.equalsIgnoreCase(op)) {
+
+		if (OP_DELETE.equalsIgnoreCase(op)) {
 			pageNo = 1;
 			if (ids != null && ids.length > 0) {
-				BankBean deletebean = new BankBean();
+				OrderBean deletebean = new OrderBean();
 				for (String id : ids) {
 					deletebean.setId(DataUtility.getInt(id));
 					try {
@@ -151,7 +100,7 @@ public class OrderListCtl extends BaseCtl{
 						return;
 					}
 
-					ServletUtility.setSuccessMessage("User is Deleted Successfully", request);
+					ServletUtility.setSuccessMessage("Order is Deleted Successfully", request);
 				}
 			} else {
 				ServletUtility.setErrorMessage("Select at least one record", request);
@@ -169,9 +118,7 @@ public class OrderListCtl extends BaseCtl{
 			ServletUtility.handleException(e, request, response);
 			return;
 		}
-		if (list == null || list.size() == 0 && !OP_DELETE.equalsIgnoreCase(op)) {
-			ServletUtility.setErrorMessage("No record found ", request);
-		}
+
 		ServletUtility.setList(list, request);
 		ServletUtility.setBean(bean, request);
 		ServletUtility.setPageNo(pageNo, request);

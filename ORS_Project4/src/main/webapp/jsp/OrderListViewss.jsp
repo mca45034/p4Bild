@@ -2,7 +2,7 @@
 <%@page import="com.rays.pro4.controller.OrderListCtl"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
 <%@page import="javax.swing.text.html.HTML"%>
-<%@page import="com.rays.pro4.Bean.BankBean"%>
+<%@page import="com.rays.pro4.Bean.OrderBean"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
 <%@page import="java.util.List"%>
@@ -16,7 +16,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:useBean id="bean" class="com.rays.pro4.Bean.BankBean"
+<jsp:useBean id="bean" class="com.rays.pro4.Bean.OrderBean"
 		scope="request"></jsp:useBean>
        <%@include file = "Header.jsp" %>
 
@@ -49,7 +49,7 @@
 				int index = ((pageNo - 1) * pageSize) + 1;
 
 				List list = ServletUtility.getList(request);
-				Iterator<BankBean> it = list.iterator();
+				Iterator<OrderBean> it = list.iterator();
 
 				if (list.size() != 0) {
 			%>

@@ -1,23 +1,17 @@
 package com.rays.pro4.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
-import com.rays.pro4.Bean.BankBean;
 import com.rays.pro4.Bean.BaseBean;
-import com.rays.pro4.Bean.BankBean;
+import com.rays.pro4.Bean.OrderBean;
 import com.rays.pro4.Exception.ApplicationException;
 import com.rays.pro4.Exception.DuplicateRecordException;
-import com.rays.pro4.Model.BankModel;
-import com.rays.pro4.Model.RoleModel;
-import com.rays.pro4.Model.BankModel;
+import com.rays.pro4.Model.OrderModel;
 import com.rays.pro4.Util.DataUtility;
 import com.rays.pro4.Util.DataValidator;
 import com.rays.pro4.Util.PropertyReader;
@@ -30,7 +24,6 @@ public class OrderCtl extends BaseCtl{
 	
 	  @Override
 	  protected boolean validate(HttpServletRequest request) {
-	  System.out.println("uctl Validate");
 	  
 	  boolean pass = true;
 	  
@@ -67,9 +60,8 @@ public class OrderCtl extends BaseCtl{
 	
 
 	protected BaseBean populateBean(HttpServletRequest request) {
-		System.out.println(" uctl Base bean P bean");
 
-		BankBean bean = new BankBean();
+		OrderBean bean = new OrderBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("cid")));
 		  bean.setC_Name(DataUtility.getString(request.getParameter("cName")));
@@ -89,10 +81,10 @@ public class OrderCtl extends BaseCtl{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String op = DataUtility.getString(request.getParameter("operation"));
-		BankModel model = new BankModel();
+		OrderModel model = new OrderModel();
 		long id = DataUtility.getLong(request.getParameter("cid"));
 		if (id > 0 || op != null) {
-			BankBean bean;
+			OrderBean bean;
 			try {
 				bean = model.findByPK(id);
 				System.out.println(bean);
@@ -116,21 +108,21 @@ public class OrderCtl extends BaseCtl{
 		long id = DataUtility.getLong(request.getParameter("cid"));
 
 
-		BankModel model = new BankModel();
+		OrderModel model = new OrderModel();
 		if (OP_SAVE.equalsIgnoreCase(op) || OP_UPDATE.equalsIgnoreCase(op)) {
-			BankBean bean = (BankBean) populateBean(request);
+			OrderBean bean = (OrderBean) populateBean(request);
 
 			try {
 				if (id > 0) {
 
 					model.update(bean);
 					ServletUtility.setBean(bean, request);
-					ServletUtility.setSuccessMessage("User is successfully Updated", request);
+					ServletUtility.setSuccessMessage("Order is successfully Updated", request);
 
 				} else {
 					long pk = model.add(bean);
 
-					ServletUtility.setSuccessMessage("User is successfully Added", request);
+					ServletUtility.setSuccessMessage("Order is successfully Added", request);
 					bean.setId(pk);
 				}
 
